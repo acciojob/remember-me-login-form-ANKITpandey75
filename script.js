@@ -1,10 +1,10 @@
-const form = document.getElementById("loginForm");
+const form = document.querySelector("form");
 const username = document.getElementById("username");
 const password = document.getElementById("password");
 const checkbox = document.getElementById("checkbox");
 const existingButton = document.getElementById("existing");
 
-function checkSavedCredentials() {
+function showExistingUserButton() {
   const savedUsername = localStorage.getItem("username");
   const savedPassword = localStorage.getItem("password");
 
@@ -28,7 +28,7 @@ form.addEventListener("submit", function (event) {
     localStorage.removeItem("password");
   }
 
-  checkSavedCredentials();
+  showExistingUserButton();
 });
 
 existingButton.addEventListener("click", function () {
@@ -39,4 +39,4 @@ existingButton.addEventListener("click", function () {
   }
 });
 
-checkSavedCredentials();
+showExistingUserButton();
