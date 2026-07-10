@@ -1,33 +1,42 @@
-let form = document.getElementById("form");
-let existing = document.getElementById("existing");
+const form = document.getElementById("loginForm");
+const username = document.getElementById("username");
+const password = document.getElementById("password");
+const checkbox = document.getElementById("checkbox");
+const existingButton = document.getElementById("existing");
 
-let savedUsername = localStorage.getItem("username");
-let savedPassword = localStorage.getItem("password");
+function checkSavedCredentials() {
+  const savedUsername = localStorage.getItem("username");
+  const savedPassword = localStorage.getItem("password");
 
-if (savedUsername && savedPassword) {
-    existing.style.display = "block";
+  if (savedUsername && savedPassword) {
+    existingButton.style.display = "block";
+  } else {
+    existingButton.style.display = "none";
+  }
 }
 
-form.addEventListener("submit", function(e) {
-    e.preventDefault();
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
 
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
-    let checkbox = document.getElementById("checkbox").checked;
+  alert("Logged in as " + username.value);
 
-    alert("Logged in as " + username);
+  if (checkbox.checked) {
+    localStorage.setItem("username", username.value);
+    localStorage.setItem("password", password.value);
+  } else {
+    localStorage.removeItem("username");
+    localStorage.removeItem("password");
+  }
 
-    if (checkbox) {
-        localStorage.setItem("username", username);
-        localStorage.setItem("password", password);
-    } else {
-        localStorage.removeItem("username");
-        localStorage.removeItem("password");
-    }
+  checkSavedCredentials();
 });
 
+existingButton.addEventListener("click", function () {
+  const savedUsername = localStorage.getItem("username");
 
-existing.addEventListener("click", function() {
-    let user = localStorage.getItem("username");
-    alert("Logged in as " + user);
+  if (savedUsername) {
+    alert("Logged in as " + savedUsername);
+  }
 });
+
+checkSavedCredentials();
